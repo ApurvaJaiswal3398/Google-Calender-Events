@@ -1,0 +1,40 @@
+{% extends 'homepage.html' %}
+
+{% block evnts %}
+{% if events %}
+<h5>Events on {{s}}</h5><br>
+{% for event in events %}
+<div>On <i>{{ event['start'].get('dateTime', event['start'].get('date')) }}</i>  : <b>{{ event['summary'] }}</b></div>
+{% endfor %}
+{% else %}
+<div><h6>There are No Events {% if s %}on {{s}}{% else %}to Display{% endif %}</h6></div>
+{% endif %}
+{% endblock %}
+
+{% block selector %}
+<form method="POST">
+    <table style="width: 70%;">
+        <tr>
+            <td><label for="sdate">Select a Date to View the Events :</label></td>
+        </tr>
+        <tr>
+            <td><input type="date" class="form-control" name="sdate" id="sdate" onchange="selectsdate()" style="width: fit-content;" value=""></td>
+        </tr>
+    </table>
+    <input type="text" class="form-control" name="dates" id="dates" style="width: fit-content; display: nne;" value="">
+    <button type="submit" class="btn btn-primary">View</button>
+</form>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    function selectsdate()
+    {
+        var s=document.getElementById('sdate');
+        var t=document.getElementById('dates');
+        t.value=s.value;
+        start=new Date(s.value+'T00:00:00Z');
+        alert("Start : ",start.toString());
+    }
+</script>
+{% endblock %}
